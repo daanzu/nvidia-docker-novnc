@@ -135,5 +135,10 @@ RUN printf "%s\n" \
 
 COPY start_desktop.sh /usr/local/bin/start_desktop.sh
 
+RUN sh -c 'echo "deb http://plf.parrot.com/sphinx/binary `lsb_release -cs`/" | sudo tee /etc/apt/sources.list.d/sphinx.list > /dev/null'
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 508B1AE5
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y parrot-sphinx grub
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y apparmor-profiles apparmor-utils
+
 CMD /usr/local/bin/start_desktop.sh
 
